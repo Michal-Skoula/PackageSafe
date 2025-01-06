@@ -2,13 +2,14 @@
 
 use App\Http\Controllers\DataController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Middleware\UserIsAdmin;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/dashboard', [DataController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
-Route::get('/table', [DataController::class, 'table']);
+Route::get('/database', [DataController::class, 'database'])->middleware([UserIsAdmin::class])->name('database');
 Route::get('/graphs', [DataController::class, 'graphs']);
 Route::get('/docs', [DataController::class, 'docs']);
 

@@ -16,8 +16,12 @@ class DataFactory extends Factory
      */
     public function definition(): array
     {
+		
         return [
-            //
-        ];
+			'temperature' 	=> fake()->numberBetween(100,400) / 10,
+			'humidity' 		=> fake()->numberBetween(0,100),
+			'co2' 			=> fake()->numberBetween(300, 800),
+			'pressure' 		=> fake()->numberBetween(800, 1600),
+		];
     }
 }
