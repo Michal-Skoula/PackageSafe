@@ -16,7 +16,7 @@ class DataFactory extends Factory
      */
     public function definition(): array
     {
-		
+
         return [
 			'temperature' 	=> fake()->numberBetween(100,400) / 10,
 			'humidity' 		=> fake()->numberBetween(0,100),
@@ -24,4 +24,11 @@ class DataFactory extends Factory
 			'pressure' 		=> fake()->numberBetween(800, 1600),
 		];
     }
+	public function set_time($time) : static
+	{
+		return $this->state([
+			'created_at' => $time,
+			'updated_at' => $time
+		]);
+	}
 }
