@@ -18,19 +18,29 @@ class DataController extends Controller
 
 		if($hour >= 6 && $hour < 10) {
 			$greeting = 'Dobré ráno';
-		}
-		else if($hour >= 10 && $hour < 18) {
+		} else if($hour >= 10 && $hour < 18) {
 			$greeting = 'Dobrý den';
-		}
-		else {
+		} else {
 			$greeting = 'Dobrý večer';
 		}
 
+		$devices = [
+			[
+				'device_id' => 1,
+				'name' => 'Kancelář'
+			],
+			[
+				'device_id' => 2,
+				'name' => 'Zasedačka'
+			]
+		];
 
-		return view('app.dashboard', [
-			'greeting' => $greeting
-		]);
+		return view('app.dashboard', compact('greeting', 'devices'));
+//		return view('app.dashboard', compact($chart));
 	}
+
+
+
 	public function database() {
 		$data = Data::paginate(100);
 
@@ -38,22 +48,18 @@ class DataController extends Controller
 	}
 	public function testEntry()
 	{
-		$payload = json_encode(request()->all());
+//		$payload = json_encode(request()->all());
+//		$response = '"{"topic":"node/push-button:0/orientation","payload":1}"';
 
-		$body = typeof(request()->getContent()); // IT FUCKING WORKS !!!!1!!!!1!!!!!
+		$body = typeof(request()->getContent());
 
-//		$topic = $body.topic;
 		Log::info("$body");
 
 
 
-		$response = '"{"topic":"node/push-button:0/orientation","payload":1}"';
 
 
 		return response()->json(['content' => $body]);
-//		$response->isEmpty();
-//		dd(request());
-
 
 	}
 }
