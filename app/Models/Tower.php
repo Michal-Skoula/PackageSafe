@@ -6,6 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * 
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Day> $days
+ * @property-read int|null $days_count
+ * @property-read \App\Models\User|null $user
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Tower newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Tower newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Tower query()
+ * @mixin \Eloquent
+ */
 class Tower extends Model
 {
     public function user() : belongsTo {

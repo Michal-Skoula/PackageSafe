@@ -15,10 +15,6 @@ return new class extends Migration
         Schema::create('towers', function (Blueprint $table) {
             $table->id();
 			$table->foreignIdFor(User::class);
-			$table->biginteger('tower_id')
-				->unsigned()
-				->unique()
-				->autoIncrement();
 			$table->string('name');
             $table->timestamps();
         });

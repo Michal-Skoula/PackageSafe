@@ -1,13 +1,23 @@
 <?php
 
+use App\Http\Controllers\DataCollectionController;
 use App\Http\Controllers\DataController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\UserIsAdmin;
-use App\Http\Middleware\VerifyCsrfTokenOverride;
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
 
-Route::post('/stanice/1', [DataController::class, 'testEntry'])->withoutMiddleware(VerifyCsrfToken::class);
+Route::get('/debug', function () {
+//	$data_type = 'temperature';
+//	$data = new DataCollectionController();
+//	dd(array_key_exists($data_type, $data->allowed_data_types));
+	$today = now()->format('Y-m-d');
+	dd($today);
+
+});
+
+Route::post('/ingest/{id}', [DataCollectionController::class, 'ingest'])->withoutMiddleware(VerifyCsrfToken::class)->name('ingest');
 
 Route::get('/', function () {
     return view('welcome');

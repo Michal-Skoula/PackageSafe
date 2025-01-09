@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Tower;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,6 +14,7 @@ return new class extends Migration
     {
         Schema::create('days', function (Blueprint $table) {
             $table->id();
+			$table->foreignIdFor(Tower::class)->constrained('towers');
 			$table->date('date');
 			$table->string('data_type');
             $table->timestamps();
