@@ -4,20 +4,20 @@ use App\Http\Controllers\DataCollectionController;
 use App\Http\Controllers\DataController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\UserIsAdmin;
+use App\Models\Day;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/debug', function () {
-//	$data_type = 'temperature';
-//	$data = new DataCollectionController();
-//	dd(array_key_exists($data_type, $data->allowed_data_types));
-	$today = now()->format('Y-m-d');
-	dd($today);
-
+	$day = new Day();
+//	$day->days('temperature', 2);
+//	$day->dataLink('App\Models\DataTypes\Temperature');
+	$week = $day->getTwoWeeks('temperature', '2025-01-10');
+	@dd($week);
 });
 
-Route::post('/ingest/{id}', [DataCollectionController::class, 'ingest'])->withoutMiddleware(VerifyCsrfToken::class)->name('ingest');
+Route::post('/towers/{id}', [DataCollectionController::class, 'ingest'])->withoutMiddleware(VerifyCsrfToken::class)->name('ingest');
 
 Route::get('/', function () {
     return view('welcome');
