@@ -11,11 +11,7 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/debug', function () {
-	$day = new Day();
-//	$day->days('temperature', 2);
-//	$day->dataLink('App\Models\DataTypes\Temperature');
-	$week = $day->getTwoWeeks('temperature', '2025-01-10');
-	@dd($week);
+	dd(Day::getWeek('temperature',2));
 });
 
 Route::post('/towers/{id}', [DataCollectionController::class, 'ingest'])->withoutMiddleware(VerifyCsrfToken::class)->name('ingest');

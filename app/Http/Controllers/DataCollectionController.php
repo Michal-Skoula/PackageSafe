@@ -40,8 +40,6 @@ class DataCollectionController extends Controller
 			'value' => $value
 		];
 	}
-	public function createDayEntry()
-	{}
 
 	public function ingest(int $id, Request $request) {
 		$tower = Tower::find($id) ?? null;
@@ -106,17 +104,6 @@ class DataCollectionController extends Controller
 			}
 		}
 		else return response()->json([ 'error' => 'Invalid request.' ]);
-
-
-
-//			// Create the entry
-//			$day = Day::where([['data_type', '=', $data_type] , ['date', '=', $today]])
-//				->orderBy('created_at')
-//				->first() ?? null;
-
-
-
-
 
 		\Log::log('info', "Successfully ingested new entry into the database.");
 

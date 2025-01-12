@@ -100,7 +100,7 @@ class Day extends Model
 					'temperature' => $day->temperatures()->get(),
 					'collision' => $day->collisions()->get(),
 					'rotation' => $day->rotations()->get(),
-					'humidity' => $day->humidity()->get(),
+					'humidity' => $day->humidities()->get(),
 					default => collect(),
 				};
 
@@ -118,7 +118,6 @@ class Day extends Model
 			'values' => $avg
 		];
 	}
-
 
 	/**
 	 * Returns the current latest data entry from the requested tower
@@ -175,7 +174,7 @@ class Day extends Model
 
 	// DB Relations
 
-	public function towers() : belongsTo {
+	public function tower() : belongsTo {
 		return $this->belongsTo(Tower::class);
 	}
 
@@ -183,7 +182,7 @@ class Day extends Model
 		return $this->hasMany(Temperature::class);
 	}
 
-	public function humidity() : hasMany {
+	public function humidities() : hasMany {
 		return $this->hasMany(Humidity::class);
 	}
 
