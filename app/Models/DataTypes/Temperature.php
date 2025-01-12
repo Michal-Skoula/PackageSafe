@@ -3,6 +3,7 @@
 namespace App\Models\DataTypes;
 
 use App\Models\Day;
+use Eloquent;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -13,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Temperature newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Temperature newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Temperature query()
- * @mixin \Eloquent
+ * @mixin Eloquent
  */
 class Temperature extends Model
 {
