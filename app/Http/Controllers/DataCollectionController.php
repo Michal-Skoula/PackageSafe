@@ -9,46 +9,60 @@ use App\Models\DataTypes\Temperature;
 use App\Models\Day;
 use App\Models\Tower;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Str;
 
 class DataCollectionController extends Controller
 {
-    public array $allowed_data_types = ['temperature','collision','rotation','humidity'];
+	/**
+	 * Get data from request - Example: "{"topic":"node/push-button:0/orientation","payload":1}"
+ 	 * @param  Request  $request
+	 * @param  Tower  $tower Tower from which the request came from
+	 * @return array|JsonResponse
+	 */
+	public function parseJSON(Request $request, Tower $tower) : array|JsonResponse
+	{
+		if($request->getContent() == null) {
+			return response()->json([ 'error' => 'There was no content found in the HTTP request.' ]);
+		}
+		$response = $request->getContent();
+
+		$response_json = json_decode($response, true);
+		$data_type = Str::afterLast($response_json['topic'], '/');
+		$value = $response_json['payload'];
+
+		\Log::log('info', "Tower $tower->name Topic: $data_type, Value: $value");
+
+		return [
+			'data_type' => $data_type,
+			'value' => $value
+		];
+	}
+	public function createDayEntry()
+	{}
 
 	public function ingest(int $id, Request $request) {
-		// Decide which device this belongs to
 		$tower = Tower::find($id) ?? null;
 		if($tower == null) {
 			return response()->json([ 'error' => 'The specified tower does not exist.' ]);
 		}
 
 		$user_id = $tower->user_id;
-		\Log::log('info', "Tower $tower->name sent HTTP request");
 
-		// Get data from request - Example: "{"topic":"node/push-button:0/orientation","payload":1}"
-		if($request->getContent() == null) {
-			return response()->json([ 'error' => 'There was no content found in the HTTP request.' ]);
-		}
-		$response = $request->getContent();
-
-		// Parse
-		$response_json = json_decode($response, true);
-		$data_type = Str::afterLast($response_json['topic'], '/');
-		$value = $response_json['payload'];
-		\Log::log('info', "Tower $tower->name Topic: $data_type, Value: $value");
+		$json = $this->parseJSON($request, $tower);
+		$data_type = $json['data_type'];
+		$value = $json['value'];
 
 
-		// Validate
-		if(in_array($data_type, $this->allowed_data_types) && isset($value)) {
-			\Log::log('info', "Data type is valid and value is set.");
+		if(Day::isValidDataType($data_type) && isset($value)) {
+			Log::log('info', "Data type is valid and value is set.");
 
 			$today = now()->format('Y-m-d');
-			$day = new Day();
-			$current_day_table_entry = $day->days($data_type) ?? null;
 
-			if(!Day::exists() || $current_day_table_entry == null) {
-				\Log::log('info', "Day Entry doesn't exist, creating $data_type's entry for today.");
+			if(! Day::todayEntryExists($data_type, $tower->id, $today)) {
+				Log::log('info', "Today's entry doesn't exist, creating $data_type's entry for today.");
 
 				Day::create([
 					'tower_id' => $tower->id,
@@ -56,21 +70,18 @@ class DataCollectionController extends Controller
 					'data_type' => $data_type,
 				]);
 			}
-			// Create the entry
-			$day = Day::where([['data_type', '=', $data_type] , ['date', '=', $today]])
-				->orderBy('created_at')
-				->first() ?? null;
+			$current_day = Day::days($data_type, $tower->id, 1)->first();
 
 			switch ($data_type) {
 				case 'temperature':
 					Temperature::create([
-						'day_id' => $day->id,
+						'day_id' => $current_day->id,
 						'temperature' => $value,
 					]);
 					break;
 				case 'collision':
 					Collision::create([
-						'day_id' => $day->id,
+						'day_id' => $current_day->id,
 						'collision' => $value,
 					]);
 					break;
@@ -78,7 +89,7 @@ class DataCollectionController extends Controller
 					// TODO: parse the three rotation values into variables to be added into the model.
 
 					Rotation::create([
-						'day_id' => $day->id,
+						'day_id' => $current_day->id,
 						'rotation_x' => $value,
 						'rotation_y' => $value,
 						'rotation_z' => $value,
@@ -86,7 +97,7 @@ class DataCollectionController extends Controller
 					break;
 				case 'humidity':
 					Humidity::create([
-						'day_id' => $day->id,
+						'day_id' => $current_day->id,
 						'humidity' => $value,
 					]);
 					break;
@@ -95,6 +106,17 @@ class DataCollectionController extends Controller
 			}
 		}
 		else return response()->json([ 'error' => 'Invalid request.' ]);
+
+
+
+//			// Create the entry
+//			$day = Day::where([['data_type', '=', $data_type] , ['date', '=', $today]])
+//				->orderBy('created_at')
+//				->first() ?? null;
+
+
+
+
 
 		\Log::log('info', "Successfully ingested new entry into the database.");
 

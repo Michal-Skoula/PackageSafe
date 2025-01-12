@@ -33,80 +33,143 @@ class Day extends Model
 {
 	protected $guarded = [];
 
-	protected array $models = [
+	public static array $allowed_data_types = ['temperature','collision','rotation','humidity'];
+
+	protected static array $models = [
 		'temperature' 	=> Temperature::class,
 		'humidity' 		=> Humidity::class,
 		'rotation' 		=> Rotation::class,
 		'collision' 	=> Collision::class,
 	];
-
-	/**
-	 * Get a collection of days from a start date
-	 * @param  string  $data_type Data type of which to retrieve the day
-	 * @param  int  $num_of_days How many days should be returned
-	 * @param  string  $date_from Starting date
-	 * @return Collection
-	 */
-	public function days(string $data_type, int $num_of_days = 1, string $date_from = '') : Collection
+	public static function isValidDataType($data_type) : bool
 	{
-		if($date_from == '') $date_from = now()->format('Y-m-d');
-		$start_date = Carbon::parse($date_from)->subDays($num_of_days);
-
-
-		return Day::whereBetween('date', [$start_date, $date_from])
-			->where('data_type','=',$data_type)
-			->get();
+		return in_array($data_type, static::$allowed_data_types);
 	}
 
 	/**
-	 * Returns averages of N number of days as a key value array of [$date => $value]
+	 * Get a collection of days from a start date
 	 * @param  string  $data_type
+	 * @param  int  $tower_id
+	 * @param  int  $num_of_days
+	 * @param  string  $date_from
+	 * @return Collection|null
+	 */
+	public static function days(string $data_type, int $tower_id, int $num_of_days = 1, string $date_from = '') : Collection|null
+	{
+		if(!static::isValidDataType($data_type) || !Tower::find($tower_id)) {
+			return null;
+		}
+
+		if($date_from == '') {
+			$date_from = now()->format('Y-m-d');
+		}
+
+		$start_date = Carbon::parse($date_from)->subDays($num_of_days);
+
+		return Day::whereBetween('date', [$start_date, $date_from])
+			->where([
+				['data_type','=',$data_type],
+				['tower_id', '=', $tower_id]
+			])->get();
+	}
+
+	/**
+	 * Returns averages of N number of days for a given tower as a key value array of [$date => $value]
+	 * @param  string  $data_type
+	 * @param  int  $tower_id
 	 * @param  int  $num_of_days
 	 * @param  string  $date_from
 	 * @return array|null
 	 */
-	public function daysAvg(string $data_type, int $num_of_days = 1, string $date_from = '') : ?array
+	public static function daysAvg(string $data_type, int $tower_id, int $num_of_days = 1, string $date_from = ''): ?array
 	{
-		$days = $this->days($data_type, $num_of_days, $date_from);
+		$days = static::days($data_type, $tower_id, $num_of_days, $date_from);
+		if (!$days) {
+			return null;
+		}
 
 		$avg = [];
-		foreach($days as $day) {
-			$values = match ($data_type) {
-				'temperature' 	=> $day->temperatures()->get(),
-				'collision' 	=> $day->collisions()->get(),
-				'rotation' 		=> $day->rotations()->get(),
-				'humidity' 		=> $day->humidity()->get(),
-				default 		=> null,
-			};
-			if($values == null) return null;
+		$date_from = $date_from ?: now()->format('Y-m-d');
+		$date_current = Carbon::parse($date_from)->subDays($num_of_days - 1);
 
-			$date = $day->date;
-			$value = $values->avg($data_type);
+		for ($i = 0; $i < $num_of_days; $i++) {
+			$day = $days->where('date', '=', $date_current->format('Y-m-d'))->first();
 
-			$avg[] = [$date => $value];
+			if ($day) {
+				$values = match ($data_type) {
+					'temperature' => $day->temperatures()->get(),
+					'collision' => $day->collisions()->get(),
+					'rotation' => $day->rotations()->get(),
+					'humidity' => $day->humidity()->get(),
+					default => collect(),
+				};
 
+				$value = $values->avg($data_type);
+				$avg[] = [$date_current->format('Y-m-d') => $value];
+			} else {
+				$avg[] = [$date_current->format('Y-m-d') => 0];
+			}
+
+			$date_current->addDay();
 		}
+
 		return [
 			'days' => $num_of_days,
 			'values' => $avg
 		];
 	}
 
-	public function getDay(string $data_type, string $date = '') : ?array
+
+	/**
+	 * Returns the current latest data entry from the requested tower
+	 * @param  string  $data_type
+	 * @param  int  $tower_id
+	 * @return int|float|null
+	 */
+	public static function latest(string $data_type, int $tower_id) : int|float|null
 	{
-		return $this->daysAvg($data_type,1, $date);
+		if(!self::isValidDataType($data_type) || !Tower::find($tower_id)) {
+			return null;
+		}
+
+		$day = static::where('tower_id', $tower_id)
+			->latest('created_at')
+			->first();
+
+		if(!$day) {
+			return null;
+		}
+
+		$model = new static::$models[$data_type];
+
+		$data = $model->where('day_id', $day->id)
+			->latest('created_at')
+			->first();
+
+		return $data ? $data->$data_type : null;
 	}
-	public function getWeek(string $data_type, string $startingDate = '') : ?array
+
+	public static function todayEntryExists(string $data_type, int $tower_id, string $date = '') : bool
 	{
-		return $this->daysAvg($data_type, 7, $startingDate);
+		return !self::days($data_type, $tower_id, 1, $date)->isEmpty();
 	}
-	public function getTwoWeeks(string $data_type, string $startingDate = '') : ?array
+
+
+	public static function getDay(string $data_type, int $tower_id, string $date = '') : ?array
 	{
-		return $this->daysAvg($data_type, 14, $startingDate);
+		return static::daysAvg($data_type, $tower_id, 1, $date);
 	}
-	public function getMonth(string $data_type, string $startingDate = '') : array
+	public static function getWeek(string $data_type, int $tower_id, string $startingDate = '') : ?array
 	{
-		return $this->daysAvg($data_type, 30, $startingDate);
+		return static::daysAvg($data_type, $tower_id, 7, $startingDate);
+	}
+	public static function getTwoWeeks(string $data_type, int $tower_id, string $startingDate = '') : ?array
+	{
+		return static::daysAvg($data_type, $tower_id, 14, $startingDate);
+	}
+	public static function getMonth(string $data_type, int $tower_id, string $startingDate = '') : array
+	{
+		return static::daysAvg($data_type, $tower_id, 30, $startingDate);
 	}
 
 
