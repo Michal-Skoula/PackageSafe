@@ -8,6 +8,6 @@
             class="fill-current text-gray-300"
             d="{{ $svg_path }}"/>
     </svg>
-    <h3 class="font-semibold text-3xl"> <span wire:poll.1000ms="update">{{ $value ?? 0 }}</span> {!! $unit_of_measurement !!}</h3>
+    <h3 class="font-semibold text-3xl"> <span wire:poll.5000ms="update">{{ $value ?? 0 }}</span> {!! $unit_of_measurement !!}</h3>
     <p class="text-gray-400">{{ $name }}</p>
 </li>

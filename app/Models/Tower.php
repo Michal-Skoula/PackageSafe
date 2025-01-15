@@ -19,6 +19,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class Tower extends Model
 {
+	public function latest(string $data_type)
+	{
+		return Day::latest($data_type, $this->id);
+	}
+
     public function user() : belongsTo {
 		return $this->belongsTo(User::class);
 	}

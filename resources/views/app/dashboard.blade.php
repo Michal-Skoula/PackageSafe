@@ -3,7 +3,21 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="overflow-hidden shadow-sm sm:rounded-lg flex flex-col gap-6">
-{{--                <div class="dark:bg-gray-800 bg-white p-6 text-gray-900 dark:text-gray-100">--}}
+                <div class="dark:bg-gray-800 bg-white p-6 text-gray-900 dark:text-gray-100">
+                    <h2 class="font-medium text-3xl dark:text-gray-200 leading-tight">Všechny zásilky</h2>
+                    @if($towers->isEmpty())
+                            <p>No towers found.</p>
+                        @else
+                            <div class="flex flex-col gap-3 py-5">
+                                @foreach($towers as $tower)
+                                    <livewire:package-line-view tower_id="{{$tower->id}}"/>
+                                @endforeach
+{{--                                <livewire:package-line-view tower_id="1"/>--}}
+{{--                                <livewire:package-line-view tower_id="1"/>--}}
+{{--                                <livewire:package-line-view tower_id="1"/>--}}
+{{--                                <livewire:package-line-view tower_id="1"/>--}}
+                            </div>
+                        @endif
 {{--                    <form action="/dashboard" method="POST" id="devicesSwitcher">--}}
 {{--                        <label for="device">Current device:</label>--}}
 {{--                        <select name="device" id="device" required class="text-black">--}}
@@ -22,13 +36,15 @@
 {{--                    </form>--}}
 {{--                    <div>--}}
 {{--                        <p>Připojení: OK</p>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
+                
+                 
+                
+                </div>
                 <div class="dark:bg-gray-800 bg-white p-6 text-gray-900 dark:text-gray-100">
                     <h2 class="font-medium text-3xl dark:text-gray-200 leading-tight">Aktuálně</h2>
                     <ul class="flex flex-wrap mt-4 gap-6">
                         <livewire:current-readings-card
-                            tower_id="2"
+                            tower_id="1"
                             data_type="temperature"
                             name="Teplota"
                             unit_of_measurement="&deg;C"
