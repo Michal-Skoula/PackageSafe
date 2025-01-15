@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class Tower extends Model
 {
+	protected $fillable = ['user_id','name','status'];
 	public function latest(string $data_type)
 	{
 		return Day::latest($data_type, $this->id);

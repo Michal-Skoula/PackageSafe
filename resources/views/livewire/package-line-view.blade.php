@@ -1,10 +1,10 @@
-<div wire:poll.30000ms="getData" class="w-full flex items-center justify-between px-5 py-3 rounded-xl dark:bg-gray-900 bg-gray-100">
-    <div class="flex items-center gap-3">
-       <div class="p-3 rounded-xl h-full dark:!bg-gray-950 bg-gray-200 dark:bg-opacity-40 bg-opacity-40">
-           <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
-               <path class="fill-current dark:text-gray-300 text-gray-800" d="M440-183v-274L200-596v274l240 139Zm80 0 240-139v-274L520-457v274Zm-80 92L160-252q-19-11-29.5-29T120-321v-318q0-22 10.5-40t29.5-29l280-161q19-11 40-11t40 11l280 161q19 11 29.5 29t10.5 40v318q0 22-10.5 40T800-252L520-91q-19 11-40 11t-40-11Zm200-528 77-44-237-137-78 45 238 136Zm-160 93 78-45-237-137-78 45 237 137Z"/>
-           </svg>
-       </div>
+<div wire:poll.30000ms="getData" class="min-w-max w-full flex items-center justify-between px-5 py-3 rounded-xl dark:bg-gray-900 bg-gray-100 gap-4">
+    <div class="flex items-center gap-3 justify-between">
+        <div class="p-3 rounded-xl h-full dark:!bg-gray-950 bg-gray-200 dark:bg-opacity-40 bg-opacity-40">
+            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
+                <path class="fill-current dark:text-gray-300 text-gray-800" d="M440-183v-274L200-596v274l240 139Zm80 0 240-139v-274L520-457v274Zm-80 92L160-252q-19-11-29.5-29T120-321v-318q0-22 10.5-40t29.5-29l280-161q19-11 40-11t40 11l280 161q19 11 29.5 29t10.5 40v318q0 22-10.5 40T800-252L520-91q-19 11-40 11t-40-11Zm200-528 77-44-237-137-78 45 238 136Zm-160 93 78-45-237-137-78 45 237 137Z"/>
+            </svg>
+        </div>
         <div class="py-3 px-2 rounded-xl h-full flex items-stretch">
             <p class="dark:text-white text-black"><span class="dark:text-gray-400 text-gray-600">Číslo objednávky: </span>{{$tower_name}}</p>
         </div>
@@ -17,7 +17,6 @@
             <x-value-with-icon-inline unit="" title="Rovina" value="{{$is_level}}" path="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480h80q0 115 72.5 203T418-166l-58-58 56-56L598-98q-29 10-58.5 14T480-80Zm20-280v-240h120q17 0 28.5 11.5T660-560v160q0 17-11.5 28.5T620-360H500Zm-200 0v-60h100v-40h-60v-40h60v-40H300v-60h120q17 0 28.5 11.5T460-560v160q0 17-11.5 28.5T420-360H300Zm260-60h40v-120h-40v120Zm240-60q0-115-72.5-203T542-794l58 58-56 56-182-182q29-10 58.5-14t59.5-4q83 0 156 31.5T763-763q54 54 85.5 127T880-480h-80Z"/>
             <x-value-with-icon-inline unit="x" title="Nárazy" value="{{$collision}}" path="M480-800 243-663l237 137 237-137-237-137ZM120-321v-318q0-22 10.5-40t29.5-29l280-161q10-5 19.5-8t20.5-3q11 0 21 3t19 8l280 161q19 11 29.5 29t10.5 40v159h-80v-116L479-434 200-596v274l240 139v92L160-252q-19-11-29.5-29T120-321ZM720-80q8 0 14-6t6-14q0-8-6-14t-14-6q-8 0-14 6t-6 14q0 8 6 14t14 6Zm-20-80h40v-160h-40v160ZM720 0q-83 0-141.5-58.5T520-200q0-83 58.5-141.5T720-400q83 0 141.5 58.5T920-200q0 83-58.5 141.5T720 0ZM480-491Z"/>
         </div>
-        <a href="/tower/{{Auth::user()->id}}/{{$tower_name}}" class="flex justify-left items-center px-7 py-1.5 bg-blue-700 hover:bg-blue-800 text-white rounded-full transition-colors">Zobrazit &ShortRightArrow;</a>
+        <a href="/tower/{{$tower_name}}" class="flex justify-left items-center px-7 py-1.5 bg-blue-700 hover:bg-blue-800 text-white rounded-full transition-colors">Zobrazit &ShortRightArrow;</a>
     </div>
-    
 </div>

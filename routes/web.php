@@ -16,6 +16,7 @@ Route::get('/debug', function () {
 
 Route::get('/dashboard', [AppController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/reklamace/{id}', [RefundController::class, 'index'])->middleware(['auth', 'verified'])->name('refund');
+Route::get('/tower/{tower_name}', [AppController::class, 'tower'])->middleware(['auth','verified']);
 
 Route::get('/database', [DataController::class, 'database'])->middleware([UserIsAdmin::class])->name('database');
 Route::get('/graphs', [DataController::class, 'graphs']);
