@@ -16,23 +16,23 @@
 @php
 $data = match($status) {
     '1' => [
-        'colors' => 'bg-yellow-500 text-yellow-950',
+        'colors' => 'dark:bg-yellow-500 dark:text-yellow-800 bg-yellow-200 text-yellow-700',
         'text' => 'Přijata'
     ],
     '2' => [
-        'colors' => 'bg-orange-500 text-orange-950',
+        'colors' => 'dark:bg-orange-500 dark:text-orange-900 bg-orange-200 text-orange-800',
         'text' => 'Na cestě'
     ],
     '3' => [
-        'colors' => 'bg-blue-500 text-blue-950',
+        'colors' => 'dark:bg-blue-400 dark:text-blue-900 bg-blue-200 text-blue-700',
         'text' => 'Čeká na vyzvednutí'
     ],
     '4' => [
-        'colors' => 'bg-green-500 text-green-950',
+        'colors' => 'dark:bg-green-500 dark:text-green-900 bg-green-200 text-green-700',
         'text' => 'Vyzvednuta'
     ],
     '5' => [
-        'colors' => 'bg-red-500 text-red-950',
+        'colors' => 'dark:bg-red-500 dark:!text-red-950 bg-red-200 text-red-700',
         'text' => 'Problém'
     ],
     'default' => [
