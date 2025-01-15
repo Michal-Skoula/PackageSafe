@@ -28,8 +28,8 @@
                         <h2 class="font-medium text-3xl dark:text-gray-200 leading-tight mb-3">404: Tuto zásilku jsme nenašli.</h2>
                         <p class="text-gray-400">Zkuste to prosím později. <a class="underline text-blue-500" href="{{ route('dashboard') }}">Návrat do dashboardu</a></p>
                     @else
-                        <h2 class="font-medium text-3xl dark:text-gray-200 leading-tight">Aktuálně</h2>
-                        <ul class="flex flex-wrap mt-4 gap-6">
+                        <h2 class="font-medium text-3xl dark:text-gray-300 text-gray-700 leading-tight mb-6">Zásilka <span class="dark:text-white text-black">#{{$tower->name}}</span></h2>
+                        <div class="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4">
                             <livewire:current-readings-card
                                 tower_id="1"
                                 data_type="temperature"
@@ -56,21 +56,21 @@
                                 data_type="collision"
                                 name="Náraz"
                                 unit_of_measurement="x"
-                                svg_path="M200-360q-50 0-85-35t-35-85q0-50 35-85t85-35q50 0 85 35t35 85q0 50-35 85t-85 35Zm0-80q17 0 28.5-11.5T240-480q0-17-11.5-28.5T200-520q-17 0-28.5 11.5T160-480q0 17 11.5 28.5T200-440Zm280 80q-50 0-85-35t-35-85q0-50 35-85t85-35q50 0 85 35t35 85q0 50-35 85t-85 35Zm0-80q17 0 28.5-11.5T520-480q0-17-11.5-28.5T480-520q-17 0-28.5 11.5T440-480q0 17 11.5 28.5T480-440Zm280 80q-50 0-85-35t-35-85q0-50 35-85t85-35q50 0 85 35t35 85q0 50-35 85t-85 35Z"
+                                svg_path="M480-800 243-663l237 137 237-137-237-137ZM120-321v-318q0-22 10.5-40t29.5-29l280-161q10-5 19.5-8t20.5-3q11 0 21 3t19 8l280 161q19 11 29.5 29t10.5 40v159h-80v-116L479-434 200-596v274l240 139v92L160-252q-19-11-29.5-29T120-321ZM720-80q8 0 14-6t6-14q0-8-6-14t-14-6q-8 0-14 6t-6 14q0 8 6 14t14 6Zm-20-80h40v-160h-40v160ZM720 0q-83 0-141.5-58.5T520-200q0-83 58.5-141.5T720-400q83 0 141.5 58.5T920-200q0 83-58.5 141.5T720 0ZM480-491Z"
                             />
-                            <li class="p-5 border border-gray-500 rounded-lg w-40 h-40 flex flex-col">
-                                <svg
-                                    class="h-10 w-10 mb-2"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 -960 960 960">
-                                    <path
-                                        class="fill-current text-gray-300"
-                                        d=""/>
-                                </svg>
-                                <h3 class="font-semibold text-3xl">Předaná</h3>
-                                <p class="text-gray-400">Stav zásilky</p>
-                            </li>
-                        </ul>
+{{--                            <li class="p-5 border border-gray-500 rounded-lg w-40 h-40 flex flex-col">--}}
+{{--                                <svg--}}
+{{--                                    class="h-10 w-10 mb-2"--}}
+{{--                                    xmlns="http://www.w3.org/2000/svg"--}}
+{{--                                    viewBox="0 -960 960 960">--}}
+{{--                                    <path--}}
+{{--                                        class="fill-current text-gray-300"--}}
+{{--                                        d=""/>--}}
+{{--                                </svg>--}}
+{{--                                <h3 class="font-semibold text-3xl">Předaná</h3>--}}
+{{--                                <p class="text-gray-400">Stav zásilky</p>--}}
+{{--                            </li>--}}
+                        </div>
                 
                         </div>
                         <div class="dark:bg-gray-800 bg-white p-6 text-gray-900 dark:text-gray-100">
