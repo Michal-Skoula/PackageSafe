@@ -7,7 +7,7 @@
         </div>
         <div class="py-3 px-2 rounded-xl h-full flex flex-col items-stretch">
             <p class="text-xs dark:text-gray-400 text-gray-600">Číslo objednávky: </p>
-            <p class="dark:text-white text-black underline font-medium"><a href="/tower/{{$tower_name}}">{{$tower_name}}</a></p>
+            <p class="dark:text-white text-black underline "><a href="/tower/{{$tower_name}}">{{$tower_name}}</a></p>
         </div>
     </td>
     <td class="px-6 h-max">
@@ -21,7 +21,4 @@
             <x-value-with-icon-inline unit="x" title="Nárazy" value="{{$collision}}" path="M480-800 243-663l237 137 237-137-237-137ZM120-321v-318q0-22 10.5-40t29.5-29l280-161q10-5 19.5-8t20.5-3q11 0 21 3t19 8l280 161q19 11 29.5 29t10.5 40v159h-80v-116L479-434 200-596v274l240 139v92L160-252q-19-11-29.5-29T120-321ZM720-80q8 0 14-6t6-14q0-8-6-14t-14-6q-8 0-14 6t-6 14q0 8 6 14t14 6Zm-20-80h40v-160h-40v160ZM720 0q-83 0-141.5-58.5T520-200q0-83 58.5-141.5T720-400q83 0 141.5 58.5T920-200q0 83-58.5 141.5T720 0ZM480-491Z"/>
         </div>
     </td>
-{{--    <td class="px-6 py-3">--}}
-{{--        <a href="/tower/{{$tower_name}}" class="inline-block px-7 py-1.5 dark:bg-white bg-black hover:opacity-80 dark:text-black text-white rounded-full transition-opacity">Zobrazit &ShortRightArrow;</a>--}}
-{{--    </td>--}}
 </tr>

@@ -28,7 +28,11 @@
                         <h2 class="font-medium text-3xl dark:text-gray-200 leading-tight mb-3">404: Tuto zásilku jsme nenašli.</h2>
                         <p class="text-gray-400">Zkuste to prosím později. <a class="underline text-blue-500" href="{{ route('dashboard') }}">Návrat do dashboardu</a></p>
                     @else
-                        <h2 class="font-medium text-3xl dark:text-gray-300 text-gray-700 leading-tight mb-6">Zásilka <span class="dark:text-white text-black">#{{$tower->name}}</span></h2>
+                        <div class="flex w-full justify-between items-center mb-6">
+                            <h2 class="font-medium text-3xl dark:text-gray-300 text-gray-700 leading-tight">Zásilka <span class="dark:text-white text-black">#{{$tower->name}}</span></h2>
+                            <a class="text-lg underline text-blue-300" href="{{route('dashboard')}}">Zpátky do dashboardu &ShortRightArrow;</a>
+                        </div>
+                       
                         <div class="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4">
                             <livewire:current-readings-card
                                 tower_id="1"
@@ -81,8 +85,6 @@
                                 
                                 
                                 </div>
-                                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-                                
                                 <script>
                                     
                                     import {Chart} from 'chart.js';

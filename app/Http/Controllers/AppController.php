@@ -10,7 +10,7 @@ class AppController extends Controller
 {
     public function index()
 	{
-		$towers = Auth::user()->towers()->orderBy('status')->get();
+		$towers = Auth::user()->towers()->orderBy('status')->paginate(30);
 
 		return view('app.dashboard', compact('towers'));
 	}

@@ -3,25 +3,8 @@
 @tailwind utilities;
 
 @layer components {
-
-    /*tr:nth-of-type(2n + 1) {*/
-    /*    @apply bg-zinc-950;*/
-    /*}*/
-    /*tr:nth-of-type(2n) {*/
-    /*    @apply bg-zinc-900;*/
-    /*}*/
-    /*tr:first-of-type {*/
-    /*    @apply bg-blue-950;*/
-    /*}*/
-    tr {
-        @apply rounded-b-xl
-    }
     tr:not(:first-of-type):not(:last-of-type) {
         @apply border-b-4 dark:border-b-gray-800 border-b-white rounded-b-xl
     }
-    td:not(:last-of-type) {
-        /*@apply border-r-2 border-r-blue-800*/
-    }
-
 }
 
