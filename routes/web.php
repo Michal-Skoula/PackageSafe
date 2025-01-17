@@ -6,11 +6,12 @@ use App\Http\Controllers\DataController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RefundController;
 use App\Http\Middleware\UserIsAdmin;
+use App\Models\Day;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/debug', function () {
-//	dd(Day::getWeek('temperature',2));
+
 });
 
 

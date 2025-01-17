@@ -81,7 +81,7 @@ class Day extends Model
 	 * @param  string  $date_from
 	 * @return array|null
 	 */
-	public static function daysAvg(string $data_type, int $tower_id, int $num_of_days = 1, string $date_from = ''): ?array
+	public static function daysAvg(string $data_type, int $tower_id, int $num_of_days = 1, string $date_from = '') :? array
 	{
 		$days = static::days($data_type, $tower_id, $num_of_days, $date_from);
 		if (!$days) {
@@ -91,6 +91,7 @@ class Day extends Model
 		$avg = [];
 		$date_from = $date_from ?: now()->format('Y-m-d');
 		$date_current = Carbon::parse($date_from)->subDays($num_of_days - 1);
+		$date_formatted = $date_current->format('Y-m-d');
 
 		for ($i = 0; $i < $num_of_days; $i++) {
 			$day = $days->where('date', '=', $date_current->format('Y-m-d'))->first();
@@ -105,18 +106,21 @@ class Day extends Model
 				};
 
 				$value = $values->avg($data_type);
-				$avg[] = [$date_current->format('Y-m-d') => $value];
+				$avg[] = [
+					'date' =>$date_formatted,
+					'value' => $value,
+				];
 			} else {
-				$avg[] = [$date_current->format('Y-m-d') => 0];
+				$avg[] = [
+					'date' =>$date_formatted,
+					'value' => 0,
+				];
 			}
 
 			$date_current->addDay();
 		}
 
-		return [
-			'days' => $num_of_days,
-			'values' => $avg
-		];
+		return $avg;
 	}
 
 	/**
