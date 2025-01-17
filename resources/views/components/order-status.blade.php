@@ -44,5 +44,5 @@ $data = match($status) {
 @endphp
 
 <div>
-    <p class="block px-4 py-1 font-light rounded-full text-sm {{$data['colors']}}">{{$data['text']}}</p>
+    <p class="inline-block px-4 py-1 font-light rounded-full text-sm {{$data['colors']}}">{{$data['text']}}</p>
 </div>

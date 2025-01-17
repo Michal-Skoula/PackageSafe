@@ -1,4 +1,4 @@
-<div class="p-8 dark:bg-gray-900 bg-gray-100 rounded-lg flex flex-col">
+<div class="p-8 dark:bg-gray-900 bg-gray-100 rounded-xl flex flex-col">
     <svg
         class="h-10 w-10 mb-2"
         

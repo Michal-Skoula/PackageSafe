@@ -77,14 +77,18 @@
                             <h2 class="font-medium text-xl dark:text-gray-200 leading-tight mb-4">Teplota během přepravy</h2>
                             <div>
                                 <div>
-                                    <canvas class="w-full" id="myChart"></canvas>
-                                </div>
+                                    <canvas class="w-full" id="myChart2"></canvas>
                                 
+                                
+                                </div>
                                 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
                                 
                                 <script>
+                                    
+                                    import {Chart} from 'chart.js';
+
                                     const ctx = document.getElementById('myChart');
-        
+
                                     new Chart(ctx, {
                                         type: 'bar',
                                         data: {
@@ -113,34 +117,36 @@
                             <h2 class="font-medium text-xl dark:text-gray-200 leading-tight mb-4">Počet nárazů</h2>
                             <div>
                                 <div>
-                                    <canvas class="w-full" id="myChart2"></canvas>
+                                    <canvas class="w-full" id="myChart"></canvas>
                                 </div>
-                                
-                                <script>
-                                    const ctx2 = document.getElementById('myChart2');
-        
-                                    new Chart(ctx2, {
-                                        type: 'bar',
-                                        data: {
-                                            labels: ['Pondělí', 'Úterý', 'Středa', 'Čtvrtek', 'Pátek', 'Sobota'],
-                                            datasets: [{
-                                                label: 'Zásilka #2341-12-2024',
-                                                data: [0,0,2,1,0,3],
-                                                borderWidth: 2,
-                                                // borderColor: '#1b4332',
-                                                // backgroundColor: '#2d6a4f',
-                                            }],
-                                        },
-                                        options: {
-                                            scales: {
-                                                y: {
-                                                    beginAtZero: true
+                                @verbatim
+                                    <script>
+                                        const ctx2 = document.getElementById('myChart2');
+
+                                        new Chart(ctx2, {
+                                            type: 'bar',
+                                            data: {
+                                                labels: ['Pondělí', 'Úterý', 'Středa', 'Čtvrtek', 'Pátek', 'Sobota'],
+                                                datasets: [{
+                                                    label: 'Zásilka DPD-2025-01-00023',
+                                                    data: [0,0,2,1,0,3],
+                                                    borderWidth: 2,
+                                                    // borderColor: '#1b4332',
+                                                    // backgroundColor: '#2d6a4f',
+                                                }],
+                                            },
+                                            options: {
+                                                scales: {
+                                                    y: {
+                                                        beginAtZero: true
+                                                    }
                                                 }
-                                            }
-                                        },
-        
-                                    });
-                                </script>
+                                            },
+
+                                        });
+                                    </script>
+                                @endverbatim
+                               
                             </div>
                         </div>
                         <div class="dark:bg-gray-800 bg-white p-6 text-gray-900 dark:text-gray-100 flex justify-between">

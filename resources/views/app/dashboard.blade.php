@@ -9,9 +9,22 @@
                         <p>No towers found.</p>
                     @else
                         <div class="grid grid-cols-1 gap-4 py-5 overflow-x-auto">
-                            @foreach($towers as $tower)
-                                <livewire:package-line-view tower_id="{{$tower->id}}"/>
-                            @endforeach
+{{--                            @foreach($towers as $tower)--}}
+{{--                                <livewire:package-line-view tower_id="{{$tower->id}}"/>--}}
+{{--                            @endforeach--}}
+                            <table class="min-w-max w-full rounded-xl overflow-clip">
+                                <tr class="dark:bg-blue-600 bg-gray-200 bg-opacity-60 text-left">
+                                    <th class="px-7 py-4">Objednávka</th>
+                                    <th class="px-7 py-4">Status</th>
+                                    <th class="px-7 py-4">Aktuální hodnoty</th>
+{{--                                    <th class="px-7 py-4">Zobrazit</th>--}}
+                                </tr>
+                                <livewire:package-line-view tower_id="1"/>
+                                <livewire:package-line-view tower_id="2"/>
+                                <livewire:package-line-view tower_id="2"/>
+                                <livewire:package-line-view tower_id="2"/>
+                            </table>
+                            
                         </div>
                     @endif
                 </div>
