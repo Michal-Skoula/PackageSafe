@@ -27,12 +27,12 @@ class TowerController extends Controller
 	public function createTower(Request $request)
 	{
 		$request->validate([
-			'tower_name' => 'required|string'
+			'tower_name' 	=> 'required|string',
+			'status' 		=> 'required|numeric|min:1|max:5'
 		]);
 
-		$status = fake()->numberBetween(1,5);
 		$tower_name = $request['tower_name'];
-
+		$status = $request['status'];
 		try {
 			Tower::create([
 				'name' 		=> $tower_name,

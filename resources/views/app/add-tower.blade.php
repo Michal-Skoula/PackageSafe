@@ -12,7 +12,8 @@
                     <h2 class="mb-4 font-medium text-xl dark:text-gray-200 leading-tight">Přidat nový tower</h2>
                     <form action="{{route('create-tower')}}" method="POST">
                         @csrf
-                        <input class="text-black" type="text" name="tower_name" id="tower_name" placeholder="Tower name">
+                        <input class="text-black" required type="text" name="tower_name" id="tower_name" placeholder="Tower name">
+                        <input class="text-black w-40" required min="1" max="5" type="number" inputmode="numeric" name="status" placeholder="Status: 1-5">
                         <x-primary-button>Odeslat</x-primary-button>
                         @if($errors->isNotEmpty())
                             <ul class="bg-red-300 rounded-xl p-5 mt-3">
