@@ -5,6 +5,7 @@ use App\Http\Controllers\DataCollectionController;
 use App\Http\Controllers\DataController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RefundController;
+use App\Http\Controllers\TowerController;
 use App\Http\Middleware\UserIsAdmin;
 use App\Models\Day;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -14,10 +15,14 @@ Route::get('/debug', function () {
 
 });
 
+Route::middleware(['auth','verified'])->group(function () {
+	Route::get('/dashboard', [AppController::class, 'index'])->name('dashboard');
 
-Route::get('/dashboard', [AppController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
-Route::get('/reklamace/{id}', [RefundController::class, 'index'])->middleware(['auth', 'verified'])->name('refund');
-Route::get('/tower/{tower_name}', [AppController::class, 'tower'])->middleware(['auth','verified']);
+	Route::get('/tower/add', 			[TowerController::class, 'newTowerView'])->withoutMiddleware(UserIsAdmin::class)->name('new-tower');
+	Route::get('/tower/{tower_name}', 	[TowerController::class, 'singleTower']);
+	Route::post('/tower/add', 			[TowerController::class, 'createTower'])->withoutMiddleware(UserIsAdmin::class)->name('create-tower');
+});
+
 
 Route::get('/database', [DataController::class, 'database'])->middleware([UserIsAdmin::class])->name('database');
 Route::get('/graphs', [DataController::class, 'graphs']);
@@ -34,3 +39,4 @@ Route::post('/towers/{id}', [DataCollectionController::class, 'ingest'])->withou
 
 require __DIR__.'/auth.php';
 
+// TODO make 404 page

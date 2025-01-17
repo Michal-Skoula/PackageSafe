@@ -14,10 +14,8 @@ class AppController extends Controller
 
 		return view('app.dashboard', compact('towers'));
 	}
-	public function tower($tower_name)
+	public function createTower()
 	{
-		$tower = Auth::user()->towers->where('name',$tower_name)->first();
 
-		return view('app.tower', compact('tower','tower_name'));
 	}
 }

@@ -18,6 +18,9 @@
                     <x-nav-link :href="route('database')" :active="request()->routeIs('database')">
                         Databáze
                     </x-nav-link>
+                    <x-nav-link :href="route('new-tower')" :active="request()->routeIs('new-tower')">
+                        Nová zásilka
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -75,6 +78,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('database')" :active="request()->routeIs('database')">
                 Databáze
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('new-tower')" :active="request()->routeIs('new-tower')">
+                Nová zásilka
             </x-responsive-nav-link>
         </div>
 
