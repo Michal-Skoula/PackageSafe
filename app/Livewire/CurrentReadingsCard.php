@@ -13,7 +13,7 @@ class CurrentReadingsCard extends Component
 
 	public function update()
 	{
-		$this->value = Day::latest($this->data_type, $this->tower_id) ?? null;
+		$this->value = Day::latestData($this->data_type, $this->tower_id) ?? null;
 	}
 
 	public function mount($name, $unit_of_measurement, $svg_path, $tower_id, $data_type)

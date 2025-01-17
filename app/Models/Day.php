@@ -120,12 +120,12 @@ class Day extends Model
 	}
 
 	/**
-	 * Returns the current latest data entry from the requested tower
+	 * Returns the current latestData data entry from the requested tower
 	 * @param  string  $data_type
 	 * @param  int  $tower_id
 	 * @return int|float|null
 	 */
-	public static function latest(string $data_type, int $tower_id) : int|float|null
+	public static function latestData(string $data_type, int $tower_id) : int|float|null
 	{
 		if(!self::isValidDataType($data_type) || !Tower::find($tower_id)) {
 			return null;
@@ -153,7 +153,14 @@ class Day extends Model
 		return !self::days($data_type, $tower_id, 1, $date)->isEmpty();
 	}
 
+	public static function getAllDaysAvg(string $data_type, int $tower_id, string $date = '') : ?array
+	{
+		$days = Tower::find($tower_id)->daysCount($data_type);
 
+		if(!$days) { return null; }
+
+		return static::daysAvg($data_type, $tower_id, $days + 1, $date);
+	}
 	public static function getDay(string $data_type, int $tower_id, string $date = '') : ?array
 	{
 		return static::daysAvg($data_type, $tower_id, 1, $date);

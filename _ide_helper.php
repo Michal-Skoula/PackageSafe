@@ -5843,7 +5843,7 @@ namespace Illuminate\Support\Facades {
         }
 
         /**
-         * Pop the latest value from the key's stack.
+         * Pop the latestData value from the key's stack.
          *
          * @param string $key
          * @return mixed 
@@ -5872,7 +5872,7 @@ namespace Illuminate\Support\Facades {
         }
 
         /**
-         * Pop the latest hidden value from the key's stack.
+         * Pop the latestData hidden value from the key's stack.
          *
          * @param string $key
          * @return mixed 

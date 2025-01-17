@@ -16,10 +16,10 @@ class PackageLineView extends Component
 
 	public function getData() : void
 	{
-		$this->temperature 	= Day::latest('temperature', $this->tower_id) ?? 0;
-		$this->humidity 	= Day::latest('humidity', $this->tower_id) ?? 0;
-		$this->is_level 	= Day::latest('rotation', $this->tower_id) ?? 0;
-		$this->collision 	= Day::latest('collision', $this->tower_id) ?? 0;
+		$this->temperature 	= Day::latestData('temperature', $this->tower_id) ?? 0;
+		$this->humidity 	= Day::latestData('humidity', $this->tower_id) ?? 0;
+		$this->is_level 	= Day::latestData('rotation', $this->tower_id) ?? 0;
+		$this->collision 	= Day::latestData('collision', $this->tower_id) ?? 0;
 	}
 	public function towers() : void
 	{
