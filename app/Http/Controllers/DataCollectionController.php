@@ -32,7 +32,7 @@ class DataCollectionController extends Controller
 		$request_content = $request->getContent();
 
 		$parsed_json = json_decode($request_content, true);
-		$parsed_base64 = preg_replace(' ', '', strtolower(base64_decode($parsed_json['payload'])));
+		$parsed_base64 = str_replace(' ', '', strtolower(base64_decode($parsed_json['payload'])));
 
 		$data_type = Str::beforeLast($parsed_base64, ':');
 		$value = Str::afterLast($parsed_base64, ':');
