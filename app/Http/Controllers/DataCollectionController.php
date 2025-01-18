@@ -51,7 +51,8 @@ class DataCollectionController extends Controller
 	}
 	public function ingest(int $id, Request $request) {
 		$tower = Tower::find($id) ?? null;
-		if($tower == null) {
+		if($tower->isEmpty()) {
+			Log::warning('The specified tower does not exist.');
 			return response()->json([ 'error' => 'The specified tower does not exist.' ]);
 		}
 
@@ -108,12 +109,16 @@ class DataCollectionController extends Controller
 					]);
 					break;
 				default:
+					Log::warning('Something went wrong in the switch statement when trying to add data to the database.');
 					return response()->json([ 'error' => 'Something went wrong when trying to add data to the database.' ]);
 			}
 		}
-		else return response()->json([ 'error' => 'Invalid request.' ]);
+		else {
+			Log::warning('Request did not pass validation.');
+			return response()->json([ 'error' => 'Request did not pass validation.' ]);
+		}
 
-		\Log::log('info', "Successfully ingested new entry into the database.");
+		Log::log('info', "Successfully ingested new entry into the database.");
 
 		return response()->json([
 			'message' => "Request type $data_type for tower $tower->name (id $tower->id) value $value stored successfully.",
