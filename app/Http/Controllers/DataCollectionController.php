@@ -51,7 +51,7 @@ class DataCollectionController extends Controller
 	}
 	public function ingest(int $id, Request $request) {
 		$tower = Tower::find($id) ?? null;
-		if($tower->isEmpty()) {
+		if($tower == null) {
 			Log::warning('The specified tower does not exist.');
 			return response()->json([ 'error' => 'The specified tower does not exist.' ]);
 		}
