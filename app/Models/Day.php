@@ -37,7 +37,9 @@ class Day extends Model
 
 	protected static array $models = [
 		'temperature' 	=> Temperature::class,
+		'temp' 			=> Temperature::class,
 		'humidity' 		=> Humidity::class,
+		'humi' 			=> Humidity::class,
 		'rotation' 		=> Rotation::class,
 		'collision' 	=> Collision::class,
 	];
