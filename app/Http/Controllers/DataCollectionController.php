@@ -13,6 +13,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Str;
+use function Termwind\parse;
 
 class DataCollectionController extends Controller
 {
@@ -22,35 +23,32 @@ class DataCollectionController extends Controller
 	 * @param  Tower  $tower Tower from which the request came from
 	 * @return array|JsonResponse
 	 */
-	public function parseJSON(Request $request, Tower $tower) : array|JsonResponse
+	public function parseRequest(Request $request, Tower $tower) : array|JsonResponse
 	{
 		if($request->getContent() == null) {
+			Log::warning('There was no content found in the HTTP request.');
 			return response()->json([ 'error' => 'There was no content found in the HTTP request.' ]);
 		}
 		$request_content = $request->getContent();
 
-		Log::debug("Request content: $request_content");
+		$parsed_json = json_decode($request_content, true);
+		$parsed_base64 = preg_replace(' ', '', strtolower(base64_decode($parsed_json['payload'])));
 
-		$request_content_json = json_decode($request_content, true);
-		$data_type = Str::afterLast($request_content_json['topic'], '/');
-		$value = $request_content_json['payload'];
+		$data_type = Str::beforeLast($parsed_base64, ':');
+		$value = Str::afterLast($parsed_base64, ':');
 
 		if(!$data_type || !$value) {
-			return response()->json(['error' => 'Invalid data format.']);
+		      return response()->json(['error' => 'Invalid data format.']);
 		}
-		$parse_base64 = base64_decode($request_content);
-		Log::debug("Parsed base64: $parse_base64");
 
-
-
-		\Log::log('info', "Tower $tower->name Topic: $data_type, Value: $value");
+		Log::log('info', "Tower $tower->name Topic: $data_type, Value: $value");
 
 		return [
 			'data_type' => $data_type,
 			'value' => $value
 		];
-	}
 
+	}
 	public function ingest(int $id, Request $request) {
 		$tower = Tower::find($id) ?? null;
 		if($tower == null) {
@@ -59,7 +57,7 @@ class DataCollectionController extends Controller
 
 		$user_id = $tower->user_id;
 
-		$json = $this->parseJSON($request, $tower);
+		$json = $this->parseRequest($request, $tower);
 		$data_type = $json['data_type'];
 		$value = $json['value'];
 
@@ -81,10 +79,16 @@ class DataCollectionController extends Controller
 			$current_day = Day::days($data_type, $tower->id, 1)->first();
 
 			switch ($data_type) {
-				case 'temperature':
+				case 'temp':
 					Temperature::create([
 						'day_id' => $current_day->id,
 						'temperature' => $value,
+					]);
+					break;
+				case 'humi':
+					Humidity::create([
+						'day_id' => $current_day->id,
+						'humidity' => round($value)
 					]);
 					break;
 				case 'collision':
@@ -101,12 +105,6 @@ class DataCollectionController extends Controller
 						'rotation_x' => $value,
 						'rotation_y' => $value,
 						'rotation_z' => $value,
-					]);
-					break;
-				case 'humidity':
-					Humidity::create([
-						'day_id' => $current_day->id,
-						'humidity' => $value,
 					]);
 					break;
 				default:
