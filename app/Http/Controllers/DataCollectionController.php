@@ -27,11 +27,21 @@ class DataCollectionController extends Controller
 		if($request->getContent() == null) {
 			return response()->json([ 'error' => 'There was no content found in the HTTP request.' ]);
 		}
-		$response = $request->getContent();
+		$request_content = $request->getContent();
 
-		$response_json = json_decode($response, true);
-		$data_type = Str::afterLast($response_json['topic'], '/');
-		$value = $response_json['payload'];
+		Log::debug("Request content: $request_content");
+
+		$request_content_json = json_decode($request_content, true);
+		$data_type = Str::afterLast($request_content_json['topic'], '/');
+		$value = $request_content_json['payload'];
+
+		if(!$data_type || !$value) {
+			return response()->json(['error' => 'Invalid data format.']);
+		}
+		$parse_base64 = base64_decode($request_content);
+		Log::debug("Parsed base64: $parse_base64");
+
+
 
 		\Log::log('info', "Tower $tower->name Topic: $data_type, Value: $value");
 
