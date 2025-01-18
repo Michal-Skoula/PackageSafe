@@ -33,7 +33,7 @@ class Day extends Model
 {
 	protected $guarded = [];
 
-	public static array $allowed_data_types = ['temperature','collision','rotation','humidity'];
+	public static array $allowed_data_types = ['temperature','temp','humidity','humi','collision','rotation'];
 
 	protected static array $models = [
 		'temperature' 	=> Temperature::class,
