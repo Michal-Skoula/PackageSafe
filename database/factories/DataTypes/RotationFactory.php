@@ -17,9 +17,7 @@ class RotationFactory extends Factory
     public function definition(): array
     {
         return [
-			'rotation_x' => fake()->numberBetween(0,360),
-			'rotation_y' => fake()->numberBetween(0,360),
-			'rotation_z' => fake()->numberBetween(0,360),
+			'rotation' => fake()->numberBetween(86, 100),
 		];
     }
 }

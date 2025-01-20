@@ -15,9 +15,7 @@ return new class extends Migration
         Schema::create('rotations', function (Blueprint $table) {
             $table->id();
 			$table->foreignIdFor(Day::class);
-			$table->integer('rotation_x');
-			$table->integer('rotation_y');
-			$table->integer('rotation_z');
+			$table->integer('rotation');
 			$table->timestamps();
         });
     }

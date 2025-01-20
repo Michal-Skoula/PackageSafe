@@ -1,22 +1,3 @@
-{{--                    <form action="/dashboard" method="POST" id="devicesSwitcher">--}}
-{{--                        <label for="device">Current device:</label>--}}
-{{--                        <select name="device" id="device" required class="text-black">--}}
-{{--                            @foreach($devices as $device)--}}
-{{--                                <option value="{{$device['device_id']}}">{{$device['name']}}</option>--}}
-{{--                            @endforeach--}}
-{{--                        </select>--}}
-{{--                        <script>--}}
-{{--                            const deviceSelector = document.getElementById('device');--}}
-{{--                            const devicesSwitcher = document.getElementById('devicesSwitcher');--}}
-{{--                            --}}
-{{--                            deviceSelector.addEventListener('change', (e) => {--}}
-{{--                                devicesSwitcher.submit();--}}
-{{--                            })--}}
-{{--                        </script>--}}
-{{--                    </form>--}}
-{{--                    <div>--}}
-{{--                        <p>Připojení: OK</p>--}}
-
 <x-app-layout>
     <x-session_error/>
     <div class="py-12">
@@ -58,8 +39,8 @@
                             <livewire:current-readings-card
                                 tower_id="{{$tower->id}}"
                                 data_type="rotation"
-                                name="V rovině?"
-                                unit_of_measurement=""
+                                name="Vodorovně"
+                                unit_of_measurement="%"
                                 svg_path="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480h80q0 115 72.5 203T418-166l-58-58 56-56L598-98q-29 10-58.5 14T480-80Zm20-280v-240h120q17 0 28.5 11.5T660-560v160q0 17-11.5 28.5T620-360H500Zm-200 0v-60h100v-40h-60v-40h60v-40H300v-60h120q17 0 28.5 11.5T460-560v160q0 17-11.5 28.5T420-360H300Zm260-60h40v-120h-40v120Zm240-60q0-115-72.5-203T542-794l58 58-56 56-182-182q29-10 58.5-14t59.5-4q83 0 156 31.5T763-763q54 54 85.5 127T880-480h-80Z"
                             />
                             <livewire:current-readings-card
@@ -72,7 +53,7 @@
                         </div>
                     </div>
                     <div class="dark:bg-gray-800 bg-white p-6 text-gray-900 dark:text-gray-100">
-                        <h2 class="font-semibold text-2xl dark:text-gray-200 leading-tight mb-1">Teplota</h2>
+                        <h2 class="font-semibold text-2xl dark:text-gray-200 leading-tight mb-1">Teplota <span class="text-gray-400">[&deg;C]</span></h2>
                         <p class="text-gray-400 mb-6">Průměrná teplota v balíčku během přepravy.</p>
                         <div>
                             <livewire:graph
@@ -86,7 +67,7 @@
                         </div>
                     </div>
                     <div class="dark:bg-gray-800 bg-white p-6 text-gray-900 dark:text-gray-100">
-                        <h2 class="font-semibold text-2xl dark:text-gray-200 leading-tight mb-1">Vlhkost</h2>
+                        <h2 class="font-semibold text-2xl dark:text-gray-200 leading-tight mb-1">Vlhkost <span class="text-gray-400">[%]</span></h2>
                         <p class="text-gray-400 mb-6">Průměrná vlhkost v balíčku během přepravy.</p>
                         <div>
                             <livewire:graph
@@ -100,7 +81,7 @@
                         </div>
                     </div>
                     <div class="dark:bg-gray-800 bg-white p-6 text-gray-900 dark:text-gray-100">
-                        <h2 class="font-semibold text-2xl dark:text-gray-200 leading-tight mb-1">Silnější nárazy</h2>
+                        <h2 class="font-semibold text-2xl dark:text-gray-200 leading-tight mb-1">Silnější nárazy <span class="text-gray-400">[x]</span></h2>
                         <p class="text-gray-400 mb-6">Množství silnějších nárazů za den dle našeho algoritmu.</p>
                         <div>
                             <livewire:graph
@@ -114,11 +95,11 @@
                         </div>
                     </div>
                     <div class="dark:bg-gray-800 bg-white p-6 text-gray-900 dark:text-gray-100">
-                        <h2 class="font-semibold text-2xl dark:text-gray-200 leading-tight mb-1">Zásilka vodorovně</h2>
+                        <h2 class="font-semibold text-2xl dark:text-gray-200 leading-tight mb-1">Zásilka vodorovně <span class="text-gray-400">[%]</span></h2>
                         <p class="text-gray-400 mb-6">Procento času, který zásilka byla vodorovně a nebyla nakloněna.</p>
                         <div>
                             <livewire:graph
-                                graph_type="bar"
+                                graph_type="line"
                                 graph_id="rotation"
                                 data_type="rotation"
                                 tower_id="{{$tower->id}}"

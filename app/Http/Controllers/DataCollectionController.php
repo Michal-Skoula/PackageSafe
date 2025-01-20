@@ -103,9 +103,7 @@ class DataCollectionController extends Controller
 
 					Rotation::create([
 						'day_id' => $current_day->id,
-						'rotation_x' => $value,
-						'rotation_y' => $value,
-						'rotation_z' => $value,
+						'rotation' => $value,
 					]);
 					break;
 				default:
