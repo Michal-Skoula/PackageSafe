@@ -14,25 +14,30 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
+	protected int $tower_count = 10;
     /**
      * Seed the application's database.`
      */
     public function run(): void
     {
-		Tower::factory()
-			->has(Day::factory()
-				->count(40)
-				->state(new Sequence(
-					['data_type' => 'temperature'],
-					['data_type' => 'humidity'],
-					['data_type' => 'collision'],
-					['data_type' => 'rotation']
-				))
+		for($i = 0; $i < $this->tower_count; $i++)
+		{
+			Tower::factory()
+				->has(Day::factory()
+					->count(40)
+					->state(new Sequence(
+						['data_type' => 'temperature'],
+						['data_type' => 'humidity'],
+						['data_type' => 'collision'],
+						['data_type' => 'rotation']
+					))
 					->has(Temperature::factory()->count(4))
 					->has(Humidity::factory()->count(4))
 					->has(Collision::factory()->count(4))
 					->has(Rotation::factory()->count(4))
 			)
-			->count(10)->create();
+			->count(1)->create();
+		}
+
     }
 }

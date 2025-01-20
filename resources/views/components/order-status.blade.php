@@ -25,7 +25,7 @@ $data = match($status) {
     ],
     '3' => [
         'colors' => 'dark:bg-blue-400 dark:text-blue-900 bg-blue-200 text-blue-700',
-        'text' => 'Čeká na vyzvednutí'
+        'text' => 'K vyzvednutí'
     ],
     '4' => [
         'colors' => 'dark:bg-green-500 dark:text-green-900 bg-green-200 text-green-700',

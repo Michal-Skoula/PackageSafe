@@ -2,22 +2,23 @@
 {{--    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>--}}
     
     
-    <canvas id="chartlivewire"></canvas>
+    <canvas id="{{$graph_id}}"></canvas>
     
     <script>
         
-        const ctx = document.getElementById('chartlivewire');
+        const {{$graph_id}} = document.getElementById('{{$graph_id}}');
 
-        new Chart(ctx, {
+        new Chart({{$graph_id}}, {
+            
             type: '{{$graph_type}}',
             data: {
                 labels: @json($dates),
                 datasets: [{
-                    label: 'Zásilka #2341-12-2024',
+                    label: '{{ $tower_name }}',
                     data: @json($values),
-                    borderWidth: 2,
-                    borderColor: '#1b4332',
-                    backgroundColor: '#2d6a4f',
+                    borderWidth: 3,
+                    borderColor: '{{$outline_color}}',
+                    backgroundColor: '{{$fill_color}}',
                 }],
             },
             options: {

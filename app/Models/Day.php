@@ -92,13 +92,15 @@ class Day extends Model
 			return null;
 		}
 
-		$avg = [];
-		$date_from = $date_from ?: now()->format('Y-m-d');
-		$date_current = Carbon::parse($date_from)->subDays($num_of_days - 1);
-		$date_formatted = $date_current->format('Y-m-d');
+		$date_from = $date_from ?: now();
+		$date_current = $date_from;
 
-		for ($i = 0; $i < $num_of_days; $i++) {
-			$day = $days->where('date', '=', $date_current->format('Y-m-d'))->first();
+		$avg = [];
+
+		foreach($days as $day) {
+			$date_current = $date_current->subDay();
+			$date_formatted = $date_current->format('d.m.');
+
 
 			if ($day) {
 				$values = match ($data_type) {
@@ -120,12 +122,12 @@ class Day extends Model
 					'value' => 0,
 				];
 			}
-
-			$date_current->addDay();
 		}
 
 		return $avg;
 	}
+
+
 
 	/**
 	 * Returns the current latestData data entry from the requested tower

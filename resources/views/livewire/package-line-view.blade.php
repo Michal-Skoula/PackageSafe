@@ -6,7 +6,7 @@
             </svg>
         </div>
         <div class="py-3 px-2 rounded-xl h-full flex flex-col items-stretch">
-            <p class="text-xs dark:text-gray-400 text-gray-600">Číslo objednávky: </p>
+            <p class="text-xs dark:text-gray-400 text-gray-600">({{$tower_id}}) Číslo objednávky: </p>
             <p class="dark:text-white text-black underline "><a href="/tower/{{$tower_name}}">{{$tower_name}}</a></p>
         </div>
     </td>

@@ -8,19 +8,15 @@ use Livewire\Component;
 
 class Graph extends Component
 {
-	public string $graph_id;
-	public string $data_type;
-	public string $graph_type;
-	public string $tower_name = 'unknown';
+	public string $graph_id, $data_type, $graph_type, $fill_color, $outline_color, $tower_name = 'unknown';
+	public ?array $dates, $values;
 	public int $tower_id;
-	public ?array $dates;
-	public ?array $values;
 
 	public function getData() : void
 	{
 		if(Day::isValidDataType($this->data_type)) {
 
-			$days = Day::getAllDaysAvg($this->data_type, $this->tower_id);
+			$days = array_reverse(Day::getAllDaysAvg($this->data_type, $this->tower_id));
 			$this->tower_name = Tower::find($this->tower_id)->name;
 
 			if($days) {
@@ -34,12 +30,14 @@ class Graph extends Component
 
 		}
 	}
-	public function mount($graph_id, $data_type, $tower_id, $graph_type = 'line') : void
+	public function mount($graph_id, $data_type, $tower_id, $graph_type = 'line', $fill_color = '', $outline_color = '') : void
 	{
 		$this->graph_id = $graph_id;
-		$this->data_type = $data_type;
-		$this->tower_id = $tower_id;
 		$this->graph_type = $graph_type;
+		$this->tower_id = $tower_id;
+		$this->data_type = $data_type;
+		$this->fill_color = $fill_color;
+		$this->outline_color = $outline_color;
 
 		$this->getData();
 	}
