@@ -7,6 +7,7 @@ use App\Models\DataTypes\Humidity;
 use App\Models\DataTypes\Rotation;
 use App\Models\DataTypes\Temperature;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -31,6 +32,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class Day extends Model
 {
+	use HasFactory;
 	protected $guarded = [];
 
 	public static array $allowed_data_types = ['temperature','temp','humidity','humi','collision','rotation'];

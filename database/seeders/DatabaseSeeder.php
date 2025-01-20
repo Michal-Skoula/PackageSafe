@@ -2,24 +2,37 @@
 
 namespace Database\Seeders;
 
-use App\Models\Data;
-use App\Models\User;
+use App\Models\DataTypes\Collision;
+use App\Models\DataTypes\Humidity;
+use App\Models\DataTypes\Rotation;
+use App\Models\DataTypes\Temperature;
+use App\Models\Day;
+use App\Models\Tower;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
     /**
-     * Seed the application's database.
+     * Seed the application's database.`
      */
     public function run(): void
     {
-		$time = now();
-
-		for($i = 0; $i < 100; $i++ ) {
-			$time->subSecond();
-			Data::factory()->set_time($time)->create();
-		}
-
+		Tower::factory()
+			->has(Day::factory()
+				->count(40)
+				->state(new Sequence(
+					['data_type' => 'temperature'],
+					['data_type' => 'humidity'],
+					['data_type' => 'collision'],
+					['data_type' => 'rotation']
+				))
+					->has(Temperature::factory()->count(4))
+					->has(Humidity::factory()->count(4))
+					->has(Collision::factory()->count(4))
+					->has(Rotation::factory()->count(4))
+			)
+			->count(10)->create();
     }
 }

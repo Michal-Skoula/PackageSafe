@@ -4,6 +4,7 @@ namespace App\Models\DataTypes;
 
 use App\Models\Day;
 use Eloquent;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -18,6 +19,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class Temperature extends Model
 {
+	use HasFactory;
 	protected $guarded = [];
 	public function day() : belongsTo {
 		return $this->belongsTo(Day::class);
