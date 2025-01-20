@@ -22,9 +22,11 @@ class DatabaseSeeder extends Seeder
     {
 		for($i = 0; $i < $this->tower_count; $i++)
 		{
+			$day_count = rand(5,10) * 4;
+
 			Tower::factory()
 				->has(Day::factory()
-					->count(40)
+					->count($day_count)
 					->state(new Sequence(
 						['data_type' => 'temperature'],
 						['data_type' => 'humidity'],
