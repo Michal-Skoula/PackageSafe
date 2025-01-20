@@ -41,11 +41,7 @@ class DataController extends Controller
 
 
 
-	public function database() {
-		$data = Data::paginate(100);
 
-		return view('app.database', ['data' => $data]);
-	}
 	public function testEntry()
 	{
 //		$payload = json_encode(request()->all());

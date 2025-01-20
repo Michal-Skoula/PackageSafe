@@ -23,7 +23,7 @@ class TowerFactory extends Factory
 		$number = fake()->randomNumber(6,true);
 		$company = Arr::random($this->companies,1);
 
-		$order_name = "$company[0]-$number";
+		$order_name = "$company[0]-2025-$number";
 
         return [
 			'user_id' 	=> 1,

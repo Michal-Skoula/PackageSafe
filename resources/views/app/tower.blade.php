@@ -31,7 +31,7 @@
                     <div class="dark:bg-gray-800 bg-white p-6 text-gray-900 dark:text-gray-100">
                         <div class="flex w-full justify-between items-center mb-2">
                             <h1 class="font-medium text-3xl dark:text-gray-300 text-gray-700 leading-tight">Zásilka <span class="dark:text-white text-black">#{{$tower->name}}</span></h1>
-                            <a class="text-lg underline text-blue-300" href="{{route('dashboard')}}">Zpátky do dashboardu &ShortRightArrow;</a>
+                            <a class="text-lg underline text-blue-500" href="{{route('dashboard')}}">Zpátky do dashboardu &ShortRightArrow;</a>
                         </div>
                         <div class="">
                             <x-order-status status="{{$tower->status}}"/>
@@ -73,7 +73,7 @@
                     </div>
                     <div class="dark:bg-gray-800 bg-white p-6 text-gray-900 dark:text-gray-100">
                         <h2 class="font-semibold text-2xl dark:text-gray-200 leading-tight mb-1">Teplota</h2>
-                        <p class="text-gray-400 mb-6">Průměrná teplota v balíčku během přepravy</p>
+                        <p class="text-gray-400 mb-6">Průměrná teplota v balíčku během přepravy.</p>
                         <div>
                             <livewire:graph
                                 graph_type="bar"
@@ -87,7 +87,7 @@
                     </div>
                     <div class="dark:bg-gray-800 bg-white p-6 text-gray-900 dark:text-gray-100">
                         <h2 class="font-semibold text-2xl dark:text-gray-200 leading-tight mb-1">Vlhkost</h2>
-                        <p class="text-gray-400 mb-6">Průměrná vlhkost v balíčku během přepravy</p>
+                        <p class="text-gray-400 mb-6">Průměrná vlhkost v balíčku během přepravy.</p>
                         <div>
                             <livewire:graph
                                 graph_type="bar"
@@ -101,7 +101,7 @@
                     </div>
                     <div class="dark:bg-gray-800 bg-white p-6 text-gray-900 dark:text-gray-100">
                         <h2 class="font-semibold text-2xl dark:text-gray-200 leading-tight mb-1">Silnější nárazy</h2>
-                        <p class="text-gray-400 mb-6">Množství silnějších nárazů za den dle našeho algoritmu</p>
+                        <p class="text-gray-400 mb-6">Množství silnějších nárazů za den dle našeho algoritmu.</p>
                         <div>
                             <livewire:graph
                                 graph_type="bar"
@@ -114,8 +114,8 @@
                         </div>
                     </div>
                     <div class="dark:bg-gray-800 bg-white p-6 text-gray-900 dark:text-gray-100">
-                        <h2 class="font-semibold text-2xl dark:text-gray-200 leading-tight mb-1">Silnější nárazy</h2>
-                        <p class="text-gray-400 mb-6">Množství silnějších nárazů za den dle našeho algoritmu</p>
+                        <h2 class="font-semibold text-2xl dark:text-gray-200 leading-tight mb-1">Zásilka vodorovně</h2>
+                        <p class="text-gray-400 mb-6">Procento času, který zásilka byla vodorovně a nebyla nakloněna.</p>
                         <div>
                             <livewire:graph
                                 graph_type="bar"
@@ -130,12 +130,13 @@
                     <div class="dark:bg-gray-800 bg-white p-6 text-gray-900 dark:text-gray-100 flex justify-between">
                         <div>
                             <h2 class="font-semibold text-xl dark:text-gray-200 leading-tight mb-1">Zásilka dorazila rozbitá?</h2>
-                            <p class="text-gray-400">Číslo zásilky: #2341-12-2024</p>
+                            <p class="text-gray-400">Vytvořte PDF report celého procesu dopravy.</p>
                         </div>
                         <a href="/reklamace/1" class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150">Vygenerovat report </a>
                     </div>
                 @endif
             </div>
         </div>
+    </div>
 </x-app-layout>
 

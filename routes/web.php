@@ -11,22 +11,19 @@ use App\Models\Day;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/debug', function () {
+Route::get('/', [AppController::class, 'index'])->name('index');
+Route::get('/database', [AppController::class, 'database'])->middleware([UserIsAdmin::class])->name('database');
 
-});
 
 Route::middleware(['auth','verified'])->group(function () {
-	Route::get('/dashboard', [AppController::class, 'index'])->name('dashboard');
+	Route::get('/dashboard', [AppController::class, 'dashboard'])->name('dashboard');
 
-	Route::get('/tower/add', 			[TowerController::class, 'newTowerView'])->withoutMiddleware(UserIsAdmin::class)->name('new-tower');
+	Route::get('/tower/add', 			[TowerController::class, 'newTowerView'])->middleware(UserIsAdmin::class)->name('new-tower');
 	Route::get('/tower/{tower_name}', 	[TowerController::class, 'singleTower']);
-	Route::post('/tower/add', 			[TowerController::class, 'createTower'])->withoutMiddleware(UserIsAdmin::class)->name('create-tower');
+	Route::post('/tower/add', 			[TowerController::class, 'createTower'])->middleware(UserIsAdmin::class)->name('create-tower');
 });
+Route::post('/towers/{id}', [DataCollectionController::class, 'ingest'])->withoutMiddleware(VerifyCsrfToken::class)->name('ingest');
 
-
-Route::get('/database', [DataController::class, 'database'])->middleware([UserIsAdmin::class])->name('database');
-Route::get('/graphs', [DataController::class, 'graphs']);
-Route::get('/docs', [DataController::class, 'docs']);
 
 
 Route::middleware('auth')->group(function () {
@@ -34,9 +31,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
-Route::post('/towers/{id}', [DataCollectionController::class, 'ingest'])->withoutMiddleware(VerifyCsrfToken::class)->name('ingest');
-
 require __DIR__.'/auth.php';
 
-// TODO make 404 page
+
+
+Route::get('{any}', fn() => route('index'));
