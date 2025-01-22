@@ -30,6 +30,7 @@ class DataCollectionController extends Controller
 			return response()->json([ 'error' => 'There was no content found in the HTTP request.' ]);
 		}
 		$request_content = $request->getContent();
+		Log::debug($request_content);
 
 		$parsed_json = json_decode($request_content, true);
 		$parsed_base64 = str_replace(' ', '', strtolower(base64_decode($parsed_json['payload'])));
@@ -38,7 +39,8 @@ class DataCollectionController extends Controller
 		$value = Str::afterLast($parsed_base64, ':');
 
 		if(!$data_type || !$value) {
-		      return response()->json(['error' => 'Invalid data format.']);
+			Log::warning('Invalid data format.');
+			return response()->json(['error' => 'Invalid data format.']);
 		}
 
 		Log::log('info', "Tower $tower->name Topic: $data_type, Value: $value");
