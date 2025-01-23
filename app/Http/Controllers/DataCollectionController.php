@@ -83,31 +83,33 @@ class DataCollectionController extends Controller
 
 			switch ($data_type) {
 				case 'temp':
+				case 't':
 					Temperature::create([
 						'day_id' => $current_day->id,
 						'temperature' => $value,
 					]);
 					break;
 				case 'humi':
+				case 'h':
 					Humidity::create([
 						'day_id' => $current_day->id,
 						'humidity' => round($value)
 					]);
 					break;
-				case 'collision':
-					Collision::create([
-						'day_id' => $current_day->id,
-						'collision' => $value,
-					]);
-					break;
-				case 'rotation':
-					// TODO: parse the three rotation values into variables to be added into the model.
-
-					Rotation::create([
-						'day_id' => $current_day->id,
-						'rotation' => $value,
-					]);
-					break;
+//				case 'collision':
+//				case 'xl':
+//					Collision::create([
+//						'day_id' => $current_day->id,
+//						'collision' => $value,
+//					]);
+//					break;
+//				case 'rotation':
+//				case 'g':
+//					Rotation::create([
+//						'day_id' => $current_day->id,
+//						'rotation' => $value,
+//					]);
+//					break;
 				default:
 					Log::warning('Something went wrong in the switch statement when trying to add data to the database.');
 					return response()->json([ 'error' => 'Something went wrong when trying to add data to the database.' ]);
